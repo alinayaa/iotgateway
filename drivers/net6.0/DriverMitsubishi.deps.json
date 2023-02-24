@@ -8,21 +8,29 @@
     ".NETCoreApp,Version=v6.0": {
       "DriverMitsubishi/1.0.0": {
         "dependencies": {
-          "IoTClient": "1.0.22",
+          "IoTClient": "1.0.40",
           "PluginInterface": "1.0.0"
         },
         "runtime": {
           "DriverMitsubishi.dll": {}
         }
       },
-      "IoTClient/1.0.22": {
+      "IoTClient/1.0.40": {
         "dependencies": {
           "System.IO.Ports": "4.6.0"
         },
         "runtime": {
           "lib/netstandard2.0/IoTClient.dll": {
-            "assemblyVersion": "1.0.22.0",
-            "fileVersion": "1.0.22.0"
+            "assemblyVersion": "1.0.40.0",
+            "fileVersion": "1.0.40.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.922.41905"
           }
         }
       },
@@ -126,6 +134,7 @@
       "System.Security.Principal.Windows/4.6.0": {},
       "PluginInterface/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
@@ -140,12 +149,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "IoTClient/1.0.22": {
+    "IoTClient/1.0.40": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UqkeoTFWpDiskvtuPiwdk7XLkvb2no1iJSE0sJusjccapbs6J5GPCf/0eGqu4ftlrHxG8E4fd7lgTA1R5Ztbgw==",
-      "path": "iotclient/1.0.22",
-      "hashPath": "iotclient.1.0.22.nupkg.sha512"
+      "sha512": "sha512-UP3hqrRbAVP5BantNe2xpNCCTNV/ASymt2j/NDDdU6mowhzZlZDLTrgwOBt93LGmX0hudc8x9zDCeRKv3f6F9Q==",
+      "path": "iotclient/1.0.40",
+      "hashPath": "iotclient.1.0.40.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pwXCZKaA7m5wgmCj49dW+H1RPSY7U62SKLTQYCcavf/k3Nyt/WnBgAjG4jMGnwy9rElfAZ2KvxvM5CJzJWG0hg==",
+      "path": "microsoft.extensions.logging.abstractions/6.0.2",
+      "hashPath": "microsoft.extensions.logging.abstractions.6.0.2.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.0.0": {
       "type": "package",

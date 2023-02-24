@@ -20,7 +20,10 @@ namespace IoTGateway.Model
         public string DeviceAddress { get; set; }
 
         [Display(Name = "类型")]
-        public PluginInterface.DataTypeEnum DataType { get; set; }
+        public DataTypeEnum DataType { get; set; }
+
+        [Display(Name = "大小端")]
+        public EndianEnum EndianType { get; set; }
 
         [Display(Name = "表达式")]
         public string Expressions { get; set; }
@@ -28,6 +31,10 @@ namespace IoTGateway.Model
         [Display(Name = "权限")]
         public ProtectTypeEnum ProtectType { get; set; }
 
+        [Display(Name = "排序")]
+        public uint Index { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
         public Device Device { get; set; }
         [Display(Name = "设备")]
         public Guid? DeviceId { get; set; }

@@ -21,7 +21,7 @@ namespace IoTGateway.ViewModel.BasicData.DeviceVariableVMs
         {
             return new List<GridAction>
             {
-                this.MakeAction("DeviceVariable","SetValue","写入值","写入值", GridActionParameterTypesEnum.SingleId,"BasicData",600).SetIconCls("_wtmicon _wtmicon-xiayibu").SetHideOnToolBar(false).SetShowInRow(false).SetBindVisiableColName("setValue"),
+                this.MakeAction("DeviceVariable","SetValue","写入值","写入值", GridActionParameterTypesEnum.MultiIds,"BasicData",600).SetIconCls("_wtmicon _wtmicon-xiayibu").SetHideOnToolBar(false).SetShowInRow(false).SetBindVisiableColName("setValue"),
                 this.MakeStandardAction("DeviceVariable", GridActionStandardTypesEnum.Create, Localizer["Sys.Create"],"BasicData", dialogWidth: 800),
                 this.MakeStandardAction("DeviceVariable", GridActionStandardTypesEnum.Edit, Localizer["Sys.Edit"], "BasicData", dialogWidth: 800),
                 this.MakeStandardAction("DeviceVariable", GridActionStandardTypesEnum.Delete, Localizer["Sys.Delete"], "BasicData", dialogWidth: 800),
@@ -45,12 +45,13 @@ namespace IoTGateway.ViewModel.BasicData.DeviceVariableVMs
             {
                 foreach (var item in device.Children)
                 {
-                    var deviceThread = deviceService.DeviceThreads.Where(x => x._device.ID.ToString() == (string)item.Value).FirstOrDefault();
+                    var deviceThread = deviceService.DeviceThreads.Where(x => x.Device.ID.ToString() == (string)item.Value).FirstOrDefault();
                     if (deviceThread != null)
-                        item.Icon = deviceThread._device.AutoStart ? (deviceThread._driver.IsConnected ? "layui-icon-link" : "layui-icon-unlink") : "layui-icon-pause";
+                        item.Icon = deviceThread.Device.AutoStart ? (deviceThread.Driver.IsConnected ? "layui-icon layui-icon-link" : "layui-icon layui-icon-unlink") : "layui-icon layui-icon-pause";
 
-                    item.Text = item.Text;
+                    item.Text = " " + item.Text;
                     item.Expended = true;
+                    item.Selected = item.Value.ToString() == IoTBackgroundService.VariableSelectDeviceId.ToString();
 
                 }
             }
@@ -65,6 +66,7 @@ namespace IoTGateway.ViewModel.BasicData.DeviceVariableVMs
                 this.MakeGridHeader(x => x.Method).SetSort(true).SetWidth(160),
                 this.MakeGridHeader(x => x.DeviceAddress).SetSort(true).SetWidth(80),
                 this.MakeGridHeader(x => x.DataType).SetSort(true).SetWidth(80),
+                this.MakeGridHeader(x => x.EndianType).SetSort(true).SetWidth(120),
                 this.MakeGridHeader(x => x.Value).SetWidth(80).SetFormat((a,b)=>{
                     return $"<div id='id{a.ID}_Value'>{a.Value}</div>";
                 }),
@@ -94,12 +96,12 @@ namespace IoTGateway.ViewModel.BasicData.DeviceVariableVMs
             var deviceService = Wtm.ServiceProvider.GetService(typeof(DeviceService)) as DeviceService;
             foreach (var item in EntityList)
             {
-                var DapThread = deviceService.DeviceThreads.Where(x => x._device.ID == item.DeviceId).FirstOrDefault();
+                var DapThread = deviceService.DeviceThreads.Where(x => x.Device.ID == item.DeviceId).FirstOrDefault();
                 if (DapThread?.DeviceValues != null && DapThread.DeviceValues.ContainsKey(item.ID))
                 {
-                    item.Value = DapThread.DeviceValues[item.ID].Value?.ToString();
-                    item.CookedValue = DapThread.DeviceValues[item.ID].CookedValue?.ToString();
-                    item.State = DapThread.DeviceValues[item.ID].StatusType.ToString();
+                    item.Value = DapThread?.DeviceValues[item.ID]?.Value?.ToString();
+                    item.CookedValue = DapThread?.DeviceValues[item.ID]?.CookedValue?.ToString();
+                    item.State = DapThread?.DeviceValues[item.ID]?.StatusType.ToString();
                 }
             }
 
@@ -120,16 +122,18 @@ namespace IoTGateway.ViewModel.BasicData.DeviceVariableVMs
                     ID = x.ID,
                     DeviceId = x.DeviceId,
                     Name = x.Name,
+                    Index = x.Index,
                     Description = x.Description,
                     Method = x.Method,
                     DeviceAddress = x.DeviceAddress,
                     DataType = x.DataType,
+                    EndianType = x.EndianType,
                     Expressions = x.Expressions,
                     ProtectType = x.ProtectType,
                     DeviceName_view = x.Device.DeviceName,
                     Device = x.Device
                 })
-                .OrderBy(x => x.DeviceName_view).ThenBy(x => x.DeviceAddress);
+                .OrderBy(x => x.DeviceName_view).ThenBy(x => x.Index);
             return query;
         }
 
